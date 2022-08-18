@@ -7,7 +7,7 @@ function App() {
   const [todos, setTodos] = useState([]);
 
   const fetchTodo = async () => {
-    const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+    const response = await fetch('https://jsonplaceholder.typicode.com/todos');
     const data = await response.json();
     setTodos(data);
   };
@@ -16,12 +16,16 @@ function App() {
     fetchTodo();
   }, []);
 
+  const handleChangeTodo = (todo) => {
+    setTodos(todos.map((t) => (t.id === todo.id ? todo : t)));
+  };
+
   return (
     <MantineProvider
       withGlobalStyles
       withNormalizeCSS
       theme={{
-        colorScheme: 'light',
+        colorScheme: 'dark',
         components: {
           Container: {
             defaultProps: {
@@ -38,7 +42,7 @@ function App() {
       }}
     >
       <Container>
-        <HomePage todos={todos} />
+        <HomePage todos={todos} handleChangeTodo={handleChangeTodo} />
       </Container>
     </MantineProvider>
   );

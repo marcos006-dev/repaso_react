@@ -1,20 +1,21 @@
-import { Badge, Button, Group } from '@mantine/core';
+import { Badge, Checkbox, Group, Text } from '@mantine/core';
 import React from 'react';
 
-const TodoItem = ({ todo }) => {
+const TodoItem = ({ todo, handleChangeTodo }) => {
   console.log(todo);
   return (
     <>
       <Group position="apart" mt="md" mb="xs">
-        <Text weight={500}>{todo.title}</Text>
+        <Text weight={500}>Norway Fjord Adventures</Text>
         <Badge color="pink" variant="light">
-          {todo.complete ? 'Completed' : 'Incompleted'}
+          {todo.completed ? 'Completed' : 'Incompleted'}
         </Badge>
       </Group>
 
-      <Button variant="light" color="blue" fullWidth mt="md" radius="md">
-        {todo.complete ? 'Complete' : 'Incomplete'}
-      </Button>
+      <Checkbox
+        checked={todo.completed}
+        onChange={(event) => handleChangeTodo(event.target.checked)}
+      />
     </>
   );
 };

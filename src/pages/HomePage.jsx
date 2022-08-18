@@ -1,16 +1,7 @@
-import {
-  Badge,
-  Button,
-  Card,
-  CardSection,
-  Group,
-  Image,
-  Table,
-  Text,
-} from '@mantine/core';
+import { CardSection } from '@mantine/core';
 import TodoItem from '../components/TodoItem';
 
-const HomePage = ({ todos }) => {
+const HomePage = ({ todos, handleChangeTodo }) => {
   console.log(todos);
   return (
     <CardSection shadow="sm" p="lg" radius="md" withBorder>
@@ -31,7 +22,11 @@ const HomePage = ({ todos }) => {
       </Button> */}
       /
       {todos.map((todo) => (
-        <TodoItem key={todo.id} todo={todo} />
+        <TodoItem
+          key={todo.id}
+          todo={todo}
+          handleChangeTodo={handleChangeTodo}
+        />
       ))}
     </CardSection>
   );
