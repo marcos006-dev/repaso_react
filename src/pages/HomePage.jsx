@@ -1,34 +1,37 @@
-import { CardSection } from '@mantine/core';
+import { useEffect, useState } from 'react';
+import { CardSection, Container } from '@mantine/core';
 import TodoItem from '../components/TodoItem';
 
-const HomePage = ({ todos, handleChangeTodo }) => {
-  console.log(todos);
+const HomePage = () => {
+  const [todos, setTodos] = useState([]);
+
+  const fetchTodo = async () => {
+    const response = await fetch('https://jsonplaceholder.typicode.com/todos');
+    const data = await response.json();
+    setTodos(data);
+  };
+  useEffect(() => {
+    fetchTodo();
+  }, []);
+
+  const handleChangeTodo = (todo) => {
+    // console.log();
+    todo.completed = !todo.completed;
+    setTodos(todos.map((t) => (t.id === todo.id ? todo : t)));
+  };
+
   return (
-    <CardSection shadow="sm" p="lg" radius="md" withBorder>
-      {/* <Group position="apart" mt="md" mb="xs">
-        <Text weight={500}>Norway Fjord Adventures</Text>
-        <Badge color="pink" variant="light">
-          On Sale
-        </Badge>
-      </Group>
-
-      <Text size="sm" color="dimmed">
-        With Fjord Tours you can explore more of the magical fjord landscapes
-        with tours and activities on and around the fjords of Norway
-      </Text>
-
-      <Button variant="light" color="blue" fullWidth mt="md" radius="md">
-        Book classic tour now
-      </Button> */}
-      /
-      {todos.map((todo) => (
-        <TodoItem
-          key={todo.id}
-          todo={todo}
-          handleChangeTodo={handleChangeTodo}
-        />
-      ))}
-    </CardSection>
+    <Container>
+      <CardSection shadow="sm" p="lg" radius="md" withBorder>
+        {todos.map((todo) => (
+          <TodoItem
+            key={todo.id}
+            todo={todo}
+            handleChangeTodo={handleChangeTodo}
+          />
+        ))}
+      </CardSection>
+    </Container>
   );
 };
 
